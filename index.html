@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>فرم تماس / ثبت سفارش</title>
+  <style>
+    /* تنظیمات کلی صفحه */
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+
+    /* فرم */
+    form {
+      background: #ffffff;
+      padding: 25px 30px;
+      border-radius: 12px;
+      width: 380px;
+      max-width: 100%;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    /* عنوان فرم */
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    /* همه فیلدها و دکمه یکسان */
+    input, textarea, select, button {
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 15px;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    /* حالت فوکوس */
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #4caf50;
+      box-shadow: 0 0 5px rgba(76,175,80,0.4);
+    }
+
+    /* دکمه ارسال */
+    button {
+      background: #4caf50;
+      color: white;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    /* textarea کمی بزرگ‌تر */
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    /* Media query برای موبایل */
+    @media (max-width: 480px) {
+      form {
+        padding: 20px;
+      }
+      input, textarea, select, button {
+        font-size: 13px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <form id="contactForm" method="post">
+    <h2>فرم تماس / ثبت سفارش</h2>
+
+    <input type="text" name="name" placeholder="نام" required>
+    <input type="email" name="email" placeholder="ایمیل" required>
+    <textarea name="message" placeholder="پیام یا سفارش شما" required></textarea>
+
+    <select name="method" id="methodSelect" required>
+      <option value="">انتخاب روش پردازش</option>
+      <option value="mail">ارسال ایمیل واقعی</option>
+      <option value="file">ذخیره در فایل</option>
+      <option value="error">شبیه‌سازی خطای mail در لوکال</option>
+    </select>
+
+    <button type="submit">ارسال</button>
+  </form>
+
+  <script>
+    // تغییر action فرم بر اساس انتخاب کاربر
+    const form = document.getElementById('contactForm');
+    const select = document.getElementById('methodSelect');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const method = select.value;
+      if(!method) { alert('لطفاً روش پردازش را انتخاب کنید'); return; }
+      form.action = 'process_' + method + '.php';
+      form.submit();
+    });
+  </script>
+</body>
+</html>
